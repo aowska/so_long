@@ -48,9 +48,9 @@
 // Struktura reprezentująca węzeł grafu
 typedef struct Node {
     bool visited;            // Czy węzeł został odwiedzony
-    char *value;             // Wartość węzła: "M", "P", "1", "0"
-    struct Node **neighbors; // Tablica wskaźników na sąsiadujące węzły
-    size_t neighbor_count;   // Liczba sąsiadujących węzłów
+    char value;             // Wartość węzła: "M", "P", "1", "0"
+    size_t i; // Tablica wskaźników na sąsiadujące węzły
+    size_t j;   // Liczba sąsiadujących węzłów
 } Node;
  
  char    *get_next_line(int fd);

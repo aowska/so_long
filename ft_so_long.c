@@ -13,75 +13,81 @@
 // Dodaj brakujący nagłówek dla funkcji malloc i free
 # include "./ft_so_long.h"
 
+Node ** nodes[100][100];
+
 bool ft_dfs(Node *node) 
 {
+    printf("%c\n", node->value );
+    printf("%d\n", node->visited);
     if (node->visited)
-        return false; // Jeśli węzeł został już odwiedzony, zwróć false
-    else 
-        node->visited = true; // Oznacz węzeł jako odwiedzony
-    if (ft_strcmp(node->value, "M") == 0)
-        return true; // Jeśli wartość węzła to "M", zwróć true 
-    if (ft_strcmp(node->value, "1") == 0)
-        return false; // Jeśli wartość węzła to "1", zwróć false
-    // Przeszukiwanie sąsiadujących węzłów
-    size_t i = 0;
-    while (i < node->neighbor_count)
-    {
-        bool success = ft_dfs(node->neighbors[i]); // Rekurencyjne wywołanie DFS dla każdego sąsiada
-        if (success)
-            return true; // Jeśli którykolwiek sąsiad zwrócił true, zwróć true
-        i++;
-    }
-    return false; // Jeśli żaden z sąsiadów nie zwrócił true, zwróć false
+        return false;
+    node->visited = true;
+    if (node->value == 'M')
+        return true;
+    if (node->value == '1')
+        return false;
+    if(ft_dfs((&nodes[node->i + 1][node->j])))
+        return true;
+    if(ft_dfs((&nodes[node->i - 1][node->j])))
+        return true;
+    if(ft_dfs((&nodes[node->i ][node->j + 1])))
+        return true;
+    if(ft_dfs((&nodes[node->i][node->j - 1])))
+        return true;
+    return false;
 }
-
 int ft_pre_dfs(char **map, size_t RowAmount)
 {
     size_t firstRowLength = ft_strlen(map[0]) - 1;
-    Node nodes[RowAmount][firstRowLength]; // Tworzymy macierz węzłów
+   // nodes[RowAmount][firstRowLength]; // Tworzymy macierz węzłów
     size_t i = 0;
+    size_t j = 0; 
     while (i < RowAmount) 
     {
-        size_t j = 0;
+        j = 0; 
         while (j < firstRowLength) 
         {
             nodes[i][j].visited = false; // Ustawiamy początkowy stan odwiedzin na false
-            nodes[i][j].value = &map[i][j]; // Przypisujemy wartość węzła
+            nodes[i][j].value = map[i][j]; // Przypisujemy wartość węzła
             // Tworzymy dla każdego węzła tablicę sąsiadujących węzłów (początkowo pustą)
-            nodes[i][j].neighbors = NULL; // W przypadku braku informacji o sąsiadach
-            nodes[i][j].neighbor_count = 0; // Ustawiamy liczbę sąsiadów na 0
+            nodes[i][j].i = i; 
+            nodes[i][j].j = j; 
+            printf("%c",nodes[i][j].value);
             j++;
         }
+        printf("\n");
         i++;
-    } 
+    }
     // Wyszukujemy węzła startowego (P) na mapie
-     Node *startNode = NULL;
+    Node *startNode = NULL;
     i = 0;
     while (i < RowAmount && startNode == NULL) 
     {
-        size_t j = 0;
-          //printf("%s\n", nodes[i][j].value);
+        j = 0;
+       // printf("%c\n", nodes[i][j].value);
          while (j < firstRowLength && startNode == NULL) 
         {
-           printf("%s\n", nodes[i][j].value);
-            if (strcmp(nodes[i][j].value, "P") == 0)
-                startNode = &nodes[i][j]; 
+                if (strcmp(&nodes[i][j].value, "P") == 0)
+                {
+                    startNode = &nodes[i][j]; 
+                    break ;
+                }
             j++;
         }
         i++;
     }
-    
+    //printf("%c\n", startNode->value);
     // Sprawdzamy, czy znaleziono węzeł startowy
     if (startNode != NULL) 
     {
         bool pathExists = ft_dfs(startNode);
         if (pathExists)
-            printf("Da się przejść od P do M.\n");
+            printf("CAN from  P to M.\n");
         else 
-            printf("Nie da się przejść od P do M.\n");
+            printf("CAN NOT from P TO M.\n");
     }
     else
-        printf("Nie znaleziono węzła startowego (P) na mapie.\n");
+        printf("P is not find\n");
     return 0; 
 }
 
@@ -90,7 +96,7 @@ int ft_maps_errors(char **map, size_t e)
     size_t firstRowLength = ft_strlen(map[0]); // Długość pierwszego wiersza
     int found_M = 0, found_P = 0;
     // Sprawdzenie pierwszego i ostatniego wiersza
-    int i = 0;
+    size_t  i = 0;
     while (i < e) 
     {
         if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 2] != '1')
@@ -149,7 +155,7 @@ int main()
     while ((s = get_next_line(fd)) != NULL) 
     {
         line[count] = s;
-        printf("[%d]: %s", count, line[count]);
+       // printf("[%d]: %s", count, line[count]);
         count++;
     }
     close(fd);
