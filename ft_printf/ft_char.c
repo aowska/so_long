@@ -13,7 +13,7 @@
 
 void	ft_char(int c, char **str)
 {
-	ft_putchar_fd((char)c, 1);
+	ft_putchar_fd(c, 1);
 	*str = (char *)malloc((1) * sizeof(char));
 	if (!*str)
 		return ;

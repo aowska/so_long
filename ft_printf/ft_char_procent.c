@@ -17,7 +17,7 @@ void	ft_char_procent(int c, char **str)
 		*str = (char *)malloc((2) * sizeof(char));
 		if (!*str)
 			return ;
-		(*str)[0] = (char)c;
+		(*str)[0] = c;
 		(*str)[1] = '\0';
 	}
 	return ;

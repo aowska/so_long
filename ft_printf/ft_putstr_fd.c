@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_putstr_fd_2(char *s, size_t *b, int fd)
+void	ft_putstr_fd2(char *s, size_t *b, int fd)
 {
 	int	i;
 

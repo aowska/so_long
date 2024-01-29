@@ -46,7 +46,7 @@ void	ft_pointer_hex(unsigned long int n, char **str)
 	n1 = n;
 	if (n == 0)
 	{
-		*str = ft_strdup("(nil)");
+		*str = ft_strdup("0x0");
 		if (!*str)
 			return ;
 		return ;

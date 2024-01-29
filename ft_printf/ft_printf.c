@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awacowsk <awacowsk@student.42berlin.de      +#+  +:+       +#+       */
+/*   By: awacowsk <awacowsk@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 23:32:40 by awacowsk          #+#    #+#             */
 /*   Updated: 2023/07/30 23:32:42 by awacowsk         ###   ########.fr       */
@@ -43,7 +43,7 @@ int	ft_printf(const char *word, ...)
 		return (-1);
 	va_start(pw, word);
 	i = 0;
-	value = NULL;
+	value = 0;
 	while (*word)
 	{
 		if (*word != '%')
@@ -54,21 +54,20 @@ int	ft_printf(const char *word, ...)
 			if (*(word) == 'c')
 				i++;
 		}
-		ft_putstr_fd(value, &i, 1);
+		ft_putstr_fd2(value, &i, 1);
 		word++;
 		free(value);
 	}
-	return (va_end(pw), (int)i);
+	return (va_end(pw), i);
 }
 
-/*
-int	main(void)
+/* int main ()
 {
-	char			ch = 'c';
-	char			str[] = "Hello, user!";
-	char			*ptr;
-	int				int1 = -1234565;
-	int				int2 = -3934555;
+	char	ch = 'c';
+	char	str[] = "Hello, user!";
+	char	*ptr;
+	int		int1 = -1234565;
+	int		int2 = -3934555;
 	unsigned int	uns = -2147483648;
 	unsigned int	hex_low = -1233454;
 	unsigned int	hex_up = -1233454;
@@ -95,9 +94,6 @@ int	main(void)
 	result = printf("%%");
 	printf("\t\t- percent sign, return value: %d\n", result);
 
-	printf("\t\tMIX  %c %s %d %i %u %p %X %x %% \n", ch, str,
-		int1, int2, uns, ptr, hex_low, hex_up);
-
 	ft_printf("\n\nMy FT_PRINTF function:\n");
 	result = ft_printf("%c", ch);
 	printf("\t\t- character, return value 'c': %d\n", result);
@@ -118,23 +114,15 @@ int	main(void)
 	result = ft_printf("%%");
 	printf("\t\t- percent sign, return value: %d\n\n", result);
 
-
-	ft_printf("\t\tMIX  %c %s %d %i %u %p %X %x %% \n", ch,
-		str, int1, int2, uns, ptr, hex_low, hex_up);
 	
-	
-	int len1 = ft_printf(NULL);
-	ft_printf("%d\n", len1);
-	int len2 = printf(NULL);
-	printf("%d\n", len2);
+	//int len1 = ft_printf(NULL);
+	//ft_printf("%d\n", len1);
+	//int len2 = printf(NULL);
+	//printf("%d\n", len2);
 	int len3 = ft_printf("");
 	ft_printf("%d\n", len3);
 	int len4 = printf("");
-	printf("%d\n\n", len4);
-
-	int i = printf("%c", 0);
-	int j = ft_printf("%c", 0);
-	printf("%d vs %d\n", i, j);
-	return (0);
-}
-*/
+	printf("%d\n", len4);
+	return 0;
+	
+} */

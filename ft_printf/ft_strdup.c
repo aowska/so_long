@@ -14,8 +14,8 @@
 char	*ft_strdup(char *src)
 {
 	char	*ptr;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;

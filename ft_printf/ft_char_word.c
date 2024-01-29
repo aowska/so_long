@@ -19,7 +19,7 @@ void	ft_char_word(int c, char **str)
 		return ;
 	else
 	{
-		(*str)[0] = (char)c;
+		(*str)[0] = c;
 		(*str)[1] = '\0';
 	}
 	return ;

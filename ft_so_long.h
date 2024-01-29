@@ -21,9 +21,9 @@
 # include <stdio.h>
 # include <errno.h>
 # include <stdbool.h>
-# include "./Libft/libft.h"
-# include "./minilibx_mms_20200219/mlx.h"
-# include "./ft_printf/ft_printf.h"
+# include "./Libft2/libft.h"
+# include "./minilibx_opengl_20191021/mlx.h"
+//# include "./ft_printf/ft_printf.h"
 
 
 
@@ -53,6 +53,7 @@ typedef struct Node {
     size_t j;   // Liczba sąsiadujących węzłów
 } Node;
  
+  int    ft_map();
  char    *get_next_line(int fd);
 
 #endif
