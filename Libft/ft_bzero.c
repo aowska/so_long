@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awacowsk <awacowsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 18:52:30 by awacowsk          #+#    #+#             */
-/*   Updated: 2023/07/03 20:01:53 by awacowsk         ###   ########.fr       */
+/*   Created: 2023/05/06 19:47:44 by awacowsk          #+#    #+#             */
+/*   Updated: 2023/05/14 19:05:28 by awacowsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
+#include "libft.h"
 
-char	*ft_strdup(char *src)
+void	*ft_bzero(void *str, size_t n)
 {
-	char	*ptr;
-	int		i;
-	int		j;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	i = ft_strlen(src);
-	ptr = NULL;
-	if (!src)
-		return (NULL);
-	ptr = (char *)malloc ((i + 1) * sizeof(char));
-	if (ptr == NULL)
-		return (NULL);
-	while (src[j])
+	while (i < n)
 	{
-		ptr[j] = src[j];
-		j++;
+		((unsigned char *)str)[i] = '\0';
+		i++;
 	}
-	ptr[j] = '\0';
-	return (ptr);
+	return (str);
 }

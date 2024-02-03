@@ -61,7 +61,7 @@ int	ft_printf(const char *word, ...)
 	return (va_end(pw), i);
 }
 
-/* int main ()
+/*int main ()
 {
 	char	ch = 'c';
 	char	str[] = "Hello, user!";
