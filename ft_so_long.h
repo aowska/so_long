@@ -32,8 +32,8 @@
 # define C_FLOOR	'0'
 # define MAP_EXT	".ber" //checkkkkk
 # define ERR_MSG	"Error"
-# define ERR_ARG	"Wrong number of arguments: requires 1 (map file path)." //checkkkk
-# define ERR_EXT	"Wrong file format, maps must have extension 'ber'." //checkkkkk
+# define ERR_ARG	"Wrong number of arguments: requires 1 (map file path)." //done 
+# define ERR_EXT	"Wrong file format, maps must have extension 'ber'." //done 
 # define ERR_OPEN	"Failed to open map"  //(done) 
 # define ERR_EMPTY	"File is empty." //done
 # define ERR_CHAR	"Invalid map: invalid character." //Checkkkkk
