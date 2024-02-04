@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_toa(size_t i, long int n1, long int n, char **str)
+void	ft_toa_dec(size_t i, long int n1, long int n, char **str)
 {
 	if (n == 0)
 	{
@@ -50,6 +50,6 @@ void	ft_itoa_dec(long int n, char **str)
 		n1 *= -1;
 		i++;
 	}
-	ft_toa(i, n1, n, str);
+	ft_toa_dec(i, n1, n, str);
 	return ;
 }

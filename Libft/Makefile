@@ -13,7 +13,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_strcpy.c ft_isalnum.c ft_isalpha.c \
 	ft_strcmp.c ft_printf.c ft_pointer_hex.c ft_lower_hex.c ft_itoa_dec.c \
 	ft_itoa_unsign.c ft_putchar_fd.c ft_upper_hex.c ft_char.c ft_string.c \
 	ft_char_word.c ft_putstr_fd2.c \
-ft_char_procent.c
+	ft_char_procent.c ft_strstr.c
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)

@@ -13,16 +13,18 @@
 #ifndef FT_SO_LONG_H
 # define FT_SO_LONG_H
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <errno.h>
-# include <stdbool.h>
-# include "./Libft/libft.h"
-# include "./minilibx_opengl_20191021/mlx.h"
+# include	<stdarg.h>
+# include	<unistd.h>
+# include	<string.h>
+# include	<stdlib.h>
+# include	<fcntl.h>
+# include	<stdio.h>
+# include	<errno.h>
+# include	<stdbool.h>
+# include	"./Libft/libft.h"
+# include	"./Libft/ft_printf.h"
+# include	"./Lmlx/mlx.h"
+# include	"./Lmlx/mlx_int.h"
 
 
 # define C_PLAYER	'P'
@@ -51,6 +53,8 @@
 #  define PIC_P                 "./pics/WE.png"
 #  define PIC_C                 "./pics/drink.png"
 #  define PIC_EXIT              "./pics/goal.png"
+# define  WIDTH 800
+# define  HEIGHT  600
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10000000
@@ -63,8 +67,16 @@ typedef struct Node {
     size_t i; // Tablica wskaźników na sąsiadujące węzły
     size_t j;   // Liczba sąsiadujących węzłów
 } Node;
- 
-  int    ft_map();
- char    *get_next_line(int fd);
+
+int     ft_check_exit_and_player(int *found_E, int *found_P);
+int     ft_char_check(char **map);
+int     ft_map();
+char    *get_next_line(int fd);
+bool    ft_dfs(Node *node, Node nodes[][100], size_t RowAmount, size_t firstRowLength);
+int     ft_pre_dfs(char **map, size_t RowAmount);
+int     ft_maps_errors_2(char **map, size_t i, size_t firstRowLength, size_t e);
+int     ft_maps_errors(char **map, size_t e);
+char**  ft_read_map(const char *filename, int *count);
+void    ft_free_map(char **map, int count);
 
 #endif

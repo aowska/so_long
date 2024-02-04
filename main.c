@@ -11,34 +11,19 @@
 /* ************************************************************************** */
 #include "./ft_so_long.h"
 
-#define WIDTH 800
-#define HEIGHT 600
-
 int main (int ac, char **av)
 {
 	if (ac != 2)
-		ft_perror_exit(ERR_ARG, NULL);
-	ft_map(char *av[1]);
-	void *mlx_ptr;
-	void *win_ptr;
+		return(ft_printf((ERR_ARG, NULL), 0));
+	if(ft_map(av[1]) != 0)
+		return (0);
+	void *mlx;
+    void *win;
 
-    // Inicjalizacja MinilibX
-	mlx_ptr = mlx_init();
-	if (!mlx_ptr) 
-	{
-		return -1;  // Błąd inicjalizacji
-	}
+    mlx = mlx_init();
+    win = mlx_new_window(mlx, 800, 600, "Hello, MiniLibX!");
 
-    // Tworzenie nowego okna
-	win_ptr = mlx_new_window(mlx_ptr, WIDTH, HEIGHT, "My Game");
-	if (!win_ptr) 
-		return -1;  // Błąd tworzenia okna
-
-    // Rysowanie czerwonego piksela w środku okna
-	mlx_pixel_put(mlx_ptr, win_ptr, WIDTH / 2, HEIGHT / 2, 0xFF0000);
-
-    // Uruchomienie pętli zdarzeń MinilibX
-	mlx_loop(mlx_ptr);
-
+    mlx_loop(mlx);
+   
 	return 0;
 }
