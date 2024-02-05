@@ -23,8 +23,8 @@
 # include	<stdbool.h>
 # include	"./Libft/libft.h"
 # include	"./Libft/ft_printf.h"
-# include	"./Lmlx/mlx.h"
-# include	"./Lmlx/mlx_int.h"
+# include	"./mlx/mlx.h"
+# include	"./mlx/mlx_int.h"
 
 
 # define C_PLAYER	'P'
@@ -32,21 +32,21 @@
 # define C_COLLECT	'C'
 # define C_WALL		'1'
 # define C_FLOOR	'0'
-# define MAP_EXT	".ber" //checkkkkk
+# define MAP_EXT	".ber"
 # define ERR_MSG	"Error"
-# define ERR_ARG	"Wrong number of arguments: requires 1 (map file path)." //done 
-# define ERR_EXT	"Wrong file format, maps must have extension 'ber'." //done 
-# define ERR_OPEN	"Failed to open map"  //(done) 
-# define ERR_EMPTY	"File is empty." //done
-# define ERR_CHAR	"Invalid map: invalid character." //Checkkkkk
-# define ERR_WIDTH	"Invalid map: not a rectangle." //done 
-# define ERR_NO_P	"Invalid map: missing starting player position."  //done
-# define ERR_DUP_P	"Invalid map: more than one starting player position." //done 
-# define ERR_NO_E	"Invalid map: missing exit." //done 
-# define ERR_DUP_E	"Invalid map: more than one exit." //done
+# define ERR_ARG	"Wrong number of arguments: requires 1 (map file path)."
+# define ERR_EXT	"Wrong file format, maps must have extension 'ber'."
+# define ERR_OPEN	"Failed to open map"
+# define ERR_EMPTY	"File is empty."
+# define ERR_CHAR	"Invalid map: invalid character."
+# define ERR_WIDTH	"Invalid map: not a rectangle."
+# define ERR_NO_P	"Invalid map: missing starting player position."
+# define ERR_DUP_P	"Invalid map: more than one starting player position."
+# define ERR_NO_E	"Invalid map: missing exit."
+# define ERR_DUP_E	"Invalid map: more than one exit."
 # define ERR_NO_C	"Invalid map: there are no collectibles."
-# define ERR_WALL	"Invalid map: wall does not enclose the map." //done 
-# define ERR_PATH	"Invalid map: there is no valid path." //done
+# define ERR_WALL	"Invalid map: wall does not enclose the map."
+# define ERR_PATH	"Invalid map: there is no valid path."
 
 #  define PIC_WALL              "./pics/wall.png"  
 #  define PIC_BACK              "./pics/Back.png"

@@ -109,12 +109,10 @@ int	ft_pre_dfs(char **map, size_t row_amount)
 			nodes[i][j].value = map[i][j];
 			nodes[i][j].i = i;
 			nodes[i][j].j = j;
-			//ft_printf("%c", nodes[i][j].value);
 			if (nodes[i][j].value == 'P')
 				start_node = &nodes[i][j];
 			j++;
 		}
-		//ft_printf("\n");
 		i++;
 	}
 	if (ft_dfs(start_node, nodes, row_amount, first_row_length) == 1)
