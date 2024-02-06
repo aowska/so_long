@@ -32,6 +32,11 @@
 # define C_COLLECT	'C'
 # define C_WALL		'1'
 # define C_FLOOR	'0'
+# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
 # define MAP_EXT	".ber"
 # define ERR_MSG	"Error"
 # define ERR_ARG	"Wrong number of arguments: requires 1 (map file path)."
@@ -48,16 +53,16 @@
 # define ERR_WALL	"Invalid map: wall does not enclose the map."
 # define ERR_PATH	"Invalid map: there is no valid path."
 
-#  define PIC_WALL              "./pics/wall.png"  
-#  define PIC_BACK              "./pics/Back.png"
-#  define PIC_P                 "./pics/WE.png"
-#  define PIC_C                 "./pics/drink.png"
-#  define PIC_EXIT              "./pics/goal.png"
-# define  WIDTH 800
-# define  HEIGHT  600
+# define PIC_WALL   "./textures/1.xpm"  
+# define PIC_BACK   "./textures/0.xpm"
+# define PIC_P      "./textures/P.xpm"
+# define PIC_C      "./textures/C.xpm"
+# define PIC_E      "./textures/E.xpm"
+# define WIDTH      800
+# define HEIGHT     600
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000000
+#  define BUFFER_SIZE 1000
 # endif
 
 // Struktura reprezentująca węzeł grafu

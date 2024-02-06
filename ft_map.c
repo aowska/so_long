@@ -41,7 +41,8 @@ char	**ft_read_map(const char *filename, int *count)
 		return (ft_printf(ERR_OPEN), NULL);
 	while ((s = get_next_line(fd)) != NULL)
 		(*count)++;
-	lseek(fd, 0, SEEK_SET);
+	close(fd);
+	fd = open(filename, O_RDONLY);
 	line = (char **)malloc(sizeof(char *) * (*count));
 	if (line == NULL) 
 		return (close(fd), ft_printf("Memory allocation failed\n"), NULL);
