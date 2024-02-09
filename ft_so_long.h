@@ -58,8 +58,8 @@
 # define PIC_P      "./textures/P.xpm"
 # define PIC_C      "./textures/C.xpm"
 # define PIC_E      "./textures/E.xpm"
-# define WIDTH      800
-# define HEIGHT     600
+# define WIDTH      600
+# define HEIGHT     300
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
@@ -73,15 +73,28 @@ typedef struct Node {
     size_t j;   // Liczba sąsiadujących węzłów
 } Node;
 
+typedef struct game {
+	void	*mlx;
+	void	*win;
+	int		w;
+	int		h;
+	void    *img;
+	void    *img2;
+	void    *img3;
+	void    *img4;
+	void    *img5;
+	Node    **map;
+} t_game;
+
 int     ft_check_exit_and_player(int *found_E, int *found_P);
 int     ft_char_check(char **map);
-int     ft_map();
 char    *get_next_line(int fd);
-bool    ft_dfs(Node *node, Node nodes[][100], size_t RowAmount, size_t firstRowLength);
-int     ft_pre_dfs(char **map, size_t RowAmount);
+bool    ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node nodes[RowAmount][firstRowLength]);
+int     ft_pre_dfs(char **map, size_t RowAmount, t_game *data);
 int     ft_maps_errors_2(char **map, size_t i, size_t firstRowLength, size_t e);
-int     ft_maps_errors(char **map, size_t e);
+int     ft_maps_errors(char **map, size_t e, t_game *data);
 char**  ft_read_map(const char *filename, int *count);
 void    ft_free_map(char **map, int count);
+int     ft_map(const char *filename, t_game *data);
 
 #endif

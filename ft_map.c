@@ -12,7 +12,7 @@
 
 #include "./ft_so_long.h"
 
-int	ft_map(const char *filename)
+int	ft_map(const char *filename, t_game *data)
 {
 	char	**line;
 	int		count;
@@ -23,10 +23,11 @@ int	ft_map(const char *filename)
 	line = ft_read_map(filename, &count);
 	if (line == NULL)
 		return (ft_printf(ERR_EMPTY), 1);
-	if (ft_maps_errors(line, count) != 0) 
+	data->h = count; 	
+	if (ft_maps_errors(line, count, data) != 0) 
 		return (ft_free_map(line, count), 1);
-	ft_pre_dfs(line, count);
-	ft_free_map(line, count);
+	ft_pre_dfs(line, count, data);
+	/*ft_free_map(line, count);*/
 	return (0);
 }
 
@@ -47,7 +48,6 @@ char	**ft_read_map(const char *filename, int *count)
 	if (line == NULL) 
 		return (close(fd), ft_printf("Memory allocation failed\n"), NULL);
 	(*count) = 0;
-	//s = get_next_line(fd);
 	while ((s = get_next_line(fd)) != NULL) 
 	{
 		line[(*count)] = s;
@@ -71,8 +71,7 @@ void	ft_free_map(char **map, int count)
 	free(map);
 }
 
-bool	ft_dfs(Node *node, Node nodes[][100], 
-		size_t RowAmount, size_t firstRowLength)
+bool	ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node nodes[][100])
 {
 	if (node->visited || node->value == '1' 
 		|| node->i >= RowAmount || node->j >= firstRowLength)
@@ -90,38 +89,39 @@ bool	ft_dfs(Node *node, Node nodes[][100],
 		nodes, RowAmount, firstRowLength));
 }
 
-int	ft_pre_dfs(char **map, size_t row_amount)
+int	ft_pre_dfs(char **maps, size_t row_amount, t_game *data)
 {
 	size_t	first_row_length;
-	Node	nodes[row_amount][100];
 	Node	*start_node;
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	first_row_length = ft_strlen(map[0]) - 1;
+	//data->map = malloc(sizeof(char *) * data->h);
+	//data->map = malloc(sizeof(char **) * data->h);
+	first_row_length = ft_strlen(maps[0]) - 1;
 	start_node = NULL;
 	while (i < row_amount) 
 	{
 		j = 0;
 		while (j < first_row_length) 
 		{
-			nodes[i][j].visited = false;
-			nodes[i][j].value = map[i][j];
-			nodes[i][j].i = i;
-			nodes[i][j].j = j;
-			if (nodes[i][j].value == 'P')
-				start_node = &nodes[i][j];
+			data->map[i][j].visited = false;
+			data->map[i][j].value = maps[i][j];
+			data->map[i][j].i = i;
+			data->map[i][j].j = j;
+			if (data->map[i][j].value == 'P')
+				start_node = &data->map[i][j];
 			j++;
 		}
 		i++;
 	}
-	if (ft_dfs(start_node, nodes, row_amount, first_row_length) == 1)
+	if (ft_dfs(start_node, row_amount, first_row_length, data->map) == 1)
 		return (ft_printf(ERR_PATH), 1);
 	return (0);
 }
 
-int	ft_maps_errors(char **map, size_t e)
+int	ft_maps_errors(char **map, size_t e, t_game *data)
 {
 	size_t	first_row_length;
 	size_t	i;
@@ -136,6 +136,7 @@ int	ft_maps_errors(char **map, size_t e)
 			return (ft_printf(ERR_WALL), 1);
 		i++;
 	}
+	data->w = (int)(first_row_length - 1);
 	return (0);
 }
 
