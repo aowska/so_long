@@ -94,7 +94,7 @@ int main (int ac, char **av)
   mlx_mouse_hook(win2,mouse_win2,0);
   mlx_key_hook(win2,key_win2,0);
   mlx_key_hook(win3,key_win3,0);*/
-
+ 
 	mlx_loop(data.mlx);
 	return (0);
 }

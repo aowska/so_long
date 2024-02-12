@@ -89,7 +89,7 @@ typedef struct game {
 int     ft_check_exit_and_player(int *found_E, int *found_P);
 int     ft_char_check(char **map);
 char    *get_next_line(int fd);
-bool    ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node nodes[RowAmount][firstRowLength]);
+bool    ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node **nodes);
 int     ft_pre_dfs(char **map, size_t RowAmount, t_game *data);
 int     ft_maps_errors_2(char **map, size_t i, size_t firstRowLength, size_t e);
 int     ft_maps_errors(char **map, size_t e, t_game *data);

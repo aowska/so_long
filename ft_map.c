@@ -46,9 +46,9 @@ char	**ft_read_map(const char *filename, int *count)
 	fd = open(filename, O_RDONLY);
 	line = (char **)malloc(sizeof(char *) * (*count));
 	if (line == NULL) 
-		return (close(fd), ft_printf("Memory allocation failed\n"), NULL);
+		return (close(fd), ft_printf("Malloc Faild\n"), NULL);
 	(*count) = 0;
-	while ((s = get_next_line(fd)) != NULL) 
+	while ((s = get_next_line(fd)) != NULL)
 	{
 		line[(*count)] = s;
 		printf( "%s", line[(*count)]);
@@ -71,7 +71,7 @@ void	ft_free_map(char **map, int count)
 	free(map);
 }
 
-bool	ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node nodes[][100])
+bool	ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node **nodes)
 {
 	if (node->visited || node->value == '1' 
 		|| node->i >= RowAmount || node->j >= firstRowLength)
@@ -80,13 +80,13 @@ bool	ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node nodes[][10
 	if (node->value == 'M') 
 		return (true);
 	return (ft_dfs(&nodes[node->i + 1][node->j], 
-		nodes, RowAmount, firstRowLength) ||
+		RowAmount, firstRowLength, nodes) ||
 		ft_dfs(&nodes[node->i - 1][node->j], 
-		nodes, RowAmount, firstRowLength) ||
+		RowAmount, firstRowLength, nodes) ||
 		ft_dfs(&nodes[node->i][node->j + 1], 
-		nodes, RowAmount, firstRowLength) ||
+		RowAmount, firstRowLength, nodes) ||
 		ft_dfs(&nodes[node->i][node->j - 1], 
-		nodes, RowAmount, firstRowLength));
+		RowAmount, firstRowLength, nodes ));
 }
 
 int	ft_pre_dfs(char **maps, size_t row_amount, t_game *data)
@@ -97,8 +97,6 @@ int	ft_pre_dfs(char **maps, size_t row_amount, t_game *data)
 	size_t	j;
 
 	i = 0;
-	//data->map = malloc(sizeof(char *) * data->h);
-	//data->map = malloc(sizeof(char **) * data->h);
 	first_row_length = ft_strlen(maps[0]) - 1;
 	start_node = NULL;
 	while (i < row_amount) 
@@ -116,7 +114,7 @@ int	ft_pre_dfs(char **maps, size_t row_amount, t_game *data)
 		}
 		i++;
 	}
-	if (ft_dfs(start_node, row_amount, first_row_length, data->map) == 1)
+	if (!ft_dfs(start_node, row_amount, first_row_length, data->map))
 		return (ft_printf(ERR_PATH), 1);
 	return (0);
 }
