@@ -67,10 +67,10 @@
 
 // Struktura reprezentująca węzeł grafu
 typedef struct Node {
-    bool visited;            // Czy węzeł został odwiedzony
-    char value;             // Wartość węzła: "M", "P", "1", "0"
-    size_t i; // Tablica wskaźników na sąsiadujące węzły
-    size_t j;   // Liczba sąsiadujących węzłów
+    bool visited;
+    char value;
+	size_t i;
+    size_t j;
 } Node;
 
 typedef struct game {
