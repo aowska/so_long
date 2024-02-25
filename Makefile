@@ -1,8 +1,8 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = ./Libft/libft.a
-SRC = ft_map.c ft_mlx.c get_next_line.c main.c	
+SRC = ft_map.c ft_map_errors.c ft_free.c ft_move.c ft_mlx.c get_next_line.c ft_dfs.c main.c	
 INCLUDES = -I/usr/include -Imlx
 MLXFLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 

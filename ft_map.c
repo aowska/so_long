@@ -23,195 +23,61 @@ int	ft_map(const char *filename, t_game *data)
 	line = ft_read_map(filename, &count);
 	if (line == NULL)
 		return (ft_printf(ERR_EMPTY), 1);
-	data->h = count; 
+	data->h = count;
 	if (ft_maps_errors(line, count, data) != 0) 
-		return (ft_free_map(line, count), 1);
-	if(ft_pre_dfs(line, count, data) != 0)
-		return (ft_free_map(line, count), 1); ;
-	ft_free_map(line, count);
+		return (ft_free_map(line), 1);
+	if (ft_pre_dfs(line, data) != 0)
+		return (ft_free_map(line), 1);
+	ft_free_map(line);
 	return (0);
+}
+
+void	ft_check_amount_lines(int *count, int fd, const char *filename)
+{
+	char	*s;
+
+	s = NULL;
+	fd = open(filename, O_RDONLY);
+	if (fd == -1) 
+		return ;
+	s = get_next_line(fd);
+	while (s != NULL)
+	{
+		(*count)++;
+		if (!s)
+			break ;
+		free(s);
+		s = get_next_line(fd);
+	}
+	close(fd);
+	
 }
 
 char	**ft_read_map(const char *filename, int *count)
 {
 	int		fd;
 	char	**line;
-	char	*s;
+	int		i;
 
+	fd = 0;
+	ft_check_amount_lines(count, fd, filename);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1) 
 		return (ft_printf(ERR_OPEN), NULL);
-	while ((s = get_next_line(fd)) != NULL)
-	{
-		(*count)++;
-		if (!s)
-			break ;
-		free(s);
-	}
-	close(fd);
-	fd = open(filename, O_RDONLY);
-	line = (char **)malloc(sizeof(char *) * (*count));
+	line = (char **)malloc(sizeof(char *) * ((*count) + 1));
 	if (line == NULL) 
 		return (close(fd), ft_printf("Malloc Faild\n"), NULL);
-	(*count) = 0;
-	while ((s = get_next_line(fd)) != NULL)
+	i = 0;
+	while (i < (*count))
 	{
-		line[(*count)] = s;
-		printf( "%s", line[(*count)]);
-		(*count)++;
-		if (!s)
+		line[i] = get_next_line(fd);
+		if (!line[i])
 			break ;
-		free(s);
-	}
-	close(fd);
-	line[(*count)] = NULL;
-	return (line);
-}
-
-void	ft_free_map(char **map, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		free(map[i]);
+		if (!(ft_strchr(line[i], '\n')))
+			line[i] = ft_strjoin(line[i], "\n\0");
+		ft_printf("%s", line[i]);
 		i++;
 	}
-	free(map);
-}
-
-bool	ft_dfs(Node *node, size_t RowAmount, size_t firstRowLength, Node **nodes)
-{ 
-	if (node->visited || node->value == '1' 
-		|| node->i >= RowAmount || node->j >= firstRowLength)
-		return (false);
-	node->visited = true;
-	if (node->value == 'E') 
-		return (true);
-	return (ft_dfs(&nodes[node->i + 1][node->j], 
-		RowAmount, firstRowLength, nodes) ||
-		ft_dfs(&nodes[node->i - 1][node->j], 
-		RowAmount, firstRowLength, nodes) ||
-		ft_dfs(&nodes[node->i][node->j + 1], 
-		RowAmount, firstRowLength, nodes) ||
-		ft_dfs(&nodes[node->i][node->j - 1], 
-		RowAmount, firstRowLength, nodes ));
-}
-
-int	ft_pre_dfs(char **maps, size_t row_amount, t_game *data)
-{
-	size_t	first_row_length;
-	Node	*start_node;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	first_row_length = ft_strlen(maps[0]) - 2;
-	ft_printf("poka%d", first_row_length);
-	start_node = NULL;
-	data->map = (Node **)malloc(sizeof(Node *) * row_amount); // Allocate memory for map
-	if (data->map == NULL)
-		return (ft_printf("Malloc Failed\n"), 1);
-	while (i < row_amount) 
-	{
-		j = 0;
-		data->map[i] = (Node *)malloc(sizeof(Node) * first_row_length); // Allocate memory for each row
-        if (data->map[i] == NULL)
-            return (ft_printf("Malloc Failed\n"), 1);
-		while (j < first_row_length) 
-		{
-			data->map[i][j].visited = false;
-			data->map[i][j].value = maps[i][j];
-			data->map[i][j].i = i;
-			data->map[i][j].j = j;
-			if (data->map[i][j].value == 'P')
-				start_node = &data->map[i][j];
-			j++;
-		}
-		i++;
-	}
-
-	if (!ft_dfs(start_node, row_amount, first_row_length, data->map))
-		return (ft_printf(ERR_PATH), 1);
-	return (0);
-}
-
-int	ft_maps_errors(char **map, size_t e, t_game *data)
-{
-	size_t	first_row_length;
-	size_t	i;
-
-	i = 0;
-	first_row_length = ft_strlen(map[0]);
-	if (ft_maps_errors_2(map, i, first_row_length, e) != 0)
-		return (1);
-	while (i < (first_row_length - 1))
-	{
-		if (map[0][i] != '1' || map[e - 1][i] != '1')
-			return (ft_printf(ERR_WALL), 1);
-		i++;
-	}
-	data->w = (int)(first_row_length - 1);
-	ft_printf("AAAAAAAAA%d\n", (size_t)data->w);
-	return (0);
-}
-
-int	ft_maps_errors_2(char **map, size_t i, size_t row_length, size_t e)
-{
-	int	found_p;
-	int	found_e;
-
-	found_p = 0;
-	found_e = 0;
-	while (i < e)
-	{
-		if (map[i][0] != '1' || map[i][row_length -2] != '1')
-			return (ft_printf(ERR_WIDTH), 1);
-		if (ft_strlen(map[i]) != row_length)
-			return (ft_printf(ERR_WALL), 1);
-		if (ft_char_check(map) != 0)
-			return (ft_printf(ERR_CHAR), 1);
-		if (ft_strchr(map[i], 'E') != NULL)
-			found_e++;
-		if (ft_strchr(map[i], 'P') != NULL)
-			found_p++;
-		i++;
-	}
-	if (ft_check_exit_and_player(&found_e, &found_p) == 1)
-		return (1);
-	return (0);
-}
-
-int	ft_check_exit_and_player(int *found_e, int *found_p)
-{
-	if (*found_e > 1)
-		return (ft_printf(ERR_DUP_E), 1);
-	else if (*found_p > 1) 
-		return (ft_printf(ERR_DUP_E), 1);
-	else if (*found_e == 0)
-		return (ft_printf(ERR_NO_E), 1);
-	else if (*found_p == 0)
-		return (ft_printf(ERR_NO_P), 1);
-	return (0);
-}
-
-int ft_char_check(char **map) 
-{
-    int i = 0;
-    int j = 0;
-
-    while (map[i] != NULL) 
-	{
-        j = 0;
-        while (map[i][j] != '\0')
-		{
-            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'P' 
-				&& map[i][j] != 'E' && map[i][j] != 'C' && map[i][j] != '\n')
-                return 1;
-			j++;
-        }
-        i++;
-    }
-    return 0;
+	line[i] = NULL;
+	return (close(fd), line);
 }
