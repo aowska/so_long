@@ -16,19 +16,41 @@ int	ft_map(const char *filename, t_game *data)
 {
 	char	**line;
 	int		count;
+	int		i;
 
 	count = 0;
+	i = 0;
 	if (ft_strstr(filename, ".ber") == NULL)
 		return (ft_printf(ERR_EXT), 1);
-	line = ft_read_map(filename, &count);
+	line = ft_read_map(filename, &count, i);
 	if (line == NULL)
 		return (ft_printf(ERR_EMPTY), 1);
 	data->h = count;
 	if (ft_maps_errors(line, count, data) != 0) 
-		return (ft_free_map(line), 1);
+		return (ft_free_map(&line), 1);
 	if (ft_pre_dfs(line, data) != 0)
-		return (ft_free_map(line), 1);
-	ft_free_map(line);
+		return (ft_free_map(&line), 1);
+	ft_free_map(&line);
+	return (0);
+}
+
+int	ft_maps_errors(char **map, size_t e, t_game *data)
+{
+	size_t	first_row_length;
+	size_t	i;
+
+	i = 0;
+	first_row_length = 0;
+	first_row_length = ft_strlen(map[0]);
+	if (ft_check_map_errors(map, i, first_row_length, e) != 0)
+		return (1);
+	while (i < (first_row_length - 1))
+	{
+		if (map[0][i] != '1' || map[e - 1][i] != '1')
+			return (ft_printf(ERR_WALL), 1);
+		i++;
+	}
+	data->w = first_row_length - 1;
 	return (0);
 }
 
@@ -50,14 +72,13 @@ void	ft_check_amount_lines(int *count, int fd, const char *filename)
 		s = get_next_line(fd);
 	}
 	close(fd);
-	
 }
 
-char	**ft_read_map(const char *filename, int *count)
+char	**ft_read_map(const char *filename, int *count, int i)
 {
 	int		fd;
 	char	**line;
-	int		i;
+	char	*temp;
 
 	fd = 0;
 	ft_check_amount_lines(count, fd, filename);
@@ -67,17 +88,16 @@ char	**ft_read_map(const char *filename, int *count)
 	line = (char **)malloc(sizeof(char *) * ((*count) + 1));
 	if (line == NULL) 
 		return (close(fd), ft_printf("Malloc Faild\n"), NULL);
-	i = 0;
 	while (i < (*count))
 	{
 		line[i] = get_next_line(fd);
-		if (!line[i])
-			break ;
 		if (!(ft_strchr(line[i], '\n')))
-			line[i] = ft_strjoin(line[i], "\n\0");
-		ft_printf("%s", line[i]);
+		{
+			temp = ft_strjoin(line[i], "\n\0");
+			free(line[i]);
+			line[i] = temp;
+		}
 		i++;
 	}
-	line[i] = NULL;
-	return (close(fd), line);
+	return (line[i] = NULL, close(fd), line);
 }

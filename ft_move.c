@@ -34,6 +34,7 @@ bool	ft_can_move_to_destination(int x, int y, t_game *data)
 		}
 		mlx_hook(data->win, DestroyNotify, 
 			StructureNotifyMask, &ft_on_destroy, data);
+		ft_free_game(data);
 		exit(EXIT_SUCCESS);
 		return (true);
 	}
@@ -56,7 +57,7 @@ void	ft_handle_special_keys(int key, t_game *data)
 	{
 		mlx_hook(data->win, DestroyNotify, 
 			StructureNotifyMask, &ft_on_destroy, data);
-		//ft_free_game(data);
+		ft_free_game(data);
 		exit(EXIT_SUCCESS);
 	}
 }

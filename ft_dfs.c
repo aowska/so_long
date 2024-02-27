@@ -81,6 +81,7 @@ void	ft_initialize_map(char **maps, t_game *data)
 		}
 		i++;
 	}
+	data->map[i] = NULL;
 }
 
 int	ft_pre_dfs(char **maps, t_game *data)

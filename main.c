@@ -41,9 +41,6 @@ int	initialize_and_configure_game(int ac, char **av, t_game *data)
 	if (ac != 2)
 		return (ft_printf(ERR_ARG), 0);
 	ft_game_initialization(data);
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		return (ft_printf("Error: mlx is not initialized\n"), 1);
 	if (ft_map(av[1], data) != 0)
 		return (ft_free_game(data), 1);
 	h = (size_t)data->h;
@@ -51,7 +48,7 @@ int	initialize_and_configure_game(int ac, char **av, t_game *data)
 	data->win = mlx_new_window(data->mlx, 
 			data->w * 64, data->h * 64, "so_long");
 	if (!data->win)
-		return (free(data->mlx), ft_free_game(data), 1);
+		return (ft_free_game(data), 1);
 	ft_mlx_xpm_file_to_image(data);
 	data->h = (size_t)h;
 	data->w = (size_t)w;
@@ -64,7 +61,7 @@ void	event_loop_and_cleanup(t_game *data)
 	mlx_hook(data->win, DestroyNotify, 
 		StructureNotifyMask, &ft_on_destroy, data);
 	mlx_loop(data->mlx);
-	//ft_free_game(data);
+	ft_free_game(data);
 }
 
 int	main(int ac, char **av)
@@ -73,7 +70,6 @@ int	main(int ac, char **av)
 
 	if (initialize_and_configure_game(ac, av, &data) != 0)
 		return (1);
-	printf("lalal");
 	ft_iterate_map_and_put_images(&data);
 	event_loop_and_cleanup(&data);
 	return (0);

@@ -82,21 +82,21 @@ typedef struct game {
 	t_node	**map;
 }	t_game;
 
-int		ft_check_player_and_exit(char **map, size_t i, 
-			size_t row_length, size_t e);
-int		ft_check_exit_and_player(int *found_E, int *found_P, int *found_C);
+int		ft_check_p_e_c(char **map, size_t i, size_t row_length, size_t e);
+int		ft_check_player_exit_coll(int *found_p, int *found_e, int *found_c);
+int		ft_check_exit_and_player(int *found_e, int *found_p, int *found_c);
 int		ft_char_check(char **map);
 char	*get_next_line(int fd);
-bool	ft_dfs(t_node *node, size_t RowAmount, 
-			size_t firstRowLength, t_node **nodes);
+bool	ft_dfs(t_node *node, size_t RowAmount,
+			size_t	firstRowLength, t_node **nodes);
 t_node	**ft_allocate_map(t_game *data);
 void	ft_initialize_map(char **maps, t_game *data);
 int		ft_pre_dfs(char **map, t_game *data);
 int		ft_check_map_errors(char **map, size_t i, size_t row_length, size_t e);
 int		ft_maps_errors(char **map, size_t e, t_game *data);
 void	ft_check_amount_lines(int *count, int fd, const char *filename);
-char	**ft_read_map(const char *filename, int *count);
-void	ft_free_map(char **map);
+char	**ft_read_map(const char *filename, int *count, int i);
+void	ft_free_map(char ***map);
 int		ft_map(const char *filename, t_game *data);
 void	ft_free_game_map(t_node **map);
 void	ft_free_game_resources_1(t_game *game);

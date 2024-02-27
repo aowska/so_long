@@ -13,17 +13,22 @@
 #include "./ft_so_long.h"
 
 /*for ft_map.c*/
-void	ft_free_map(char **map)
+void	ft_free_map(char ***map)
 {
 	int	i;
 
 	i = 0;
-	while (*map[i])
+	if (*map != NULL)
 	{
-		free(map[i]);
-		i++;
+		while ((*map)[i] != NULL)
+		{
+			free((*map)[i]);
+			(*map)[i] = NULL;
+			i++;
+		}
+		free(*map);
+		*map = NULL;
 	}
-	free(map);
 }
 
 /*for main.c */
@@ -36,8 +41,8 @@ void	ft_free_game_map(t_node **map)
 	{
 		while ((map[i]) != NULL)
 		{
-				free(map[i]);
-				map[i] = NULL;
+			free(map[i]);
+			map[i] = NULL;
 			i++;
 		}
 		free(map);

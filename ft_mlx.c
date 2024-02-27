@@ -16,7 +16,7 @@ int	ft_on_destroy(t_game *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
-	//ft_free_game(data);
+	ft_free_game(data);
 	exit(0);
 	return (0);
 }

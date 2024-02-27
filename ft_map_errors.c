@@ -12,26 +12,6 @@
 
 #include "./ft_so_long.h"
 
-int	ft_maps_errors(char **map, size_t e, t_game *data)
-{
-	size_t	first_row_length;
-	size_t	i;
-
-	i = 0;
-	first_row_length = 0;
-	first_row_length = ft_strlen(map[0]);
-	if (ft_check_map_errors(map, i, first_row_length, e) != 0)
-		return (1);
-	while (i < (first_row_length - 1))
-	{
-		if (map[0][i] != '1' || map[e - 1][i] != '1')
-			return (ft_printf(ERR_WALL), 1);
-		i++;
-	}
-	data->w = first_row_length - 1;
-	return (0);
-}
-
 int	ft_check_map_errors(char **map, size_t i, size_t row_length, size_t e)
 {
 	int	result;
@@ -47,11 +27,12 @@ int	ft_check_map_errors(char **map, size_t i, size_t row_length, size_t e)
 			return (ft_printf(ERR_CHAR), 1);
 		i++;
 	}
-	result = ft_check_player_and_exit(map, i, row_length, e);
+	i = 0;
+	result = ft_check_p_e_c(map, i, row_length, e);
 	return (result);
 }
 
-int	ft_check_player_and_exit(char **map, size_t i, size_t row_length, size_t e)
+int	ft_check_p_e_c(char **map, size_t i, size_t row_length, size_t e)
 {
 	int		found_p;
 	int		found_e;
@@ -61,7 +42,6 @@ int	ft_check_player_and_exit(char **map, size_t i, size_t row_length, size_t e)
 	found_p = 0;
 	found_e = 0;
 	found_c = 0;
-	i = 0;
 	while (i < e)
 	{
 		j = 0;
@@ -77,7 +57,12 @@ int	ft_check_player_and_exit(char **map, size_t i, size_t row_length, size_t e)
 		}
 		i++;
 	}
-	if (ft_check_exit_and_player(&found_e, &found_p, &found_c) == 1)
+	return (ft_check_player_exit_coll(&found_p, &found_e, &found_c));
+}
+
+int	ft_check_player_exit_coll(int *found_p, int *found_e, int *found_c)
+{
+	if (ft_check_exit_and_player(found_e, found_p, found_c) == 1)
 		return (1);
 	return (0);
 }
