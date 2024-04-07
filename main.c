@@ -31,15 +31,13 @@ int	ft_game_initialization(t_game *game)
 	return (0);
 }
 
-int	initialize_and_configure_game(int ac, char **av, t_game *data)
+int	initialize_and_configure_game(char **av, t_game *data)
 {
 	size_t	h;
 	size_t	w;
 
 	h = 0;
 	w = 0;
-	if (ac != 2)
-		return (ft_printf(ERR_ARG), 0);
 	ft_game_initialization(data);
 	if (ft_map(av[1], data) != 0)
 		return (ft_free_game(data), 1);
@@ -68,7 +66,9 @@ int	main(int ac, char **av)
 {
 	t_game	data;
 
-	if (initialize_and_configure_game(ac, av, &data) != 0)
+	if (ac != 2)
+		return (ft_printf(ERR_ARG), 1);
+	if (initialize_and_configure_game(av, &data) != 0)
 		return (1);
 	ft_iterate_map_and_put_images(&data);
 	event_loop_and_cleanup(&data);
